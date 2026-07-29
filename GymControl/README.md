@@ -1,16 +1,26 @@
-## UNIVERSIDAD NACIONAL DE LOJA
+# 🏋️ GymControl
+
+Sistema de gestión integral para gimnasios, desarrollado como proyecto académico aplicando los principios de la **Programación Orientada a Objetos (POO)**.
+
+![Java](https://img.shields.io/badge/Java-21-orange?logo=openjdk)
+![Jakarta EE](https://img.shields.io/badge/Jakarta%20EE-10-blue)
+![PrimeFaces](https://img.shields.io/badge/PrimeFaces-15-green)
+![PostgreSQL](https://img.shields.io/badge/PostgreSQL-16-336791?logo=postgresql&logoColor=white)
+![Docker](https://img.shields.io/badge/Docker-Compose-2496ED?logo=docker&logoColor=white)
+![License](https://img.shields.io/badge/status-académico-lightgrey)
+
+---
+
+## 🎓 Universidad Nacional de Loja
 
 **Facultad de la Energía, las Industrias y los Recursos Naturales No Renovables**
 **Carrera de Ingeniería en Sistemas**
 
----
-
-# GymControl
-### Sistema de gestión integral para gimnasios
-
-**Asignatura:** Programación Orientada a Objetos
-
-**Docente:** ING. Wilman Chamba
+| | |
+|---|---|
+| **Asignatura** | Programación Orientada a Objetos |
+| **Docente** | Ing. Wilman Chamba |
+| **Periodo académico** | 2026 |
 
 **Integrantes:**
 - Darwin Campoverde
@@ -19,20 +29,39 @@
 - Erick Rogel
 - Jahir Campoverde
 
-**Periodo académico:** 2026
+---
+
+## 📑 Tabla de contenidos
+
+1. [Descripción del proyecto](#-descripción-del-proyecto)
+2. [Objetivos](#-objetivos)
+3. [Justificación](#-justificación)
+4. [Módulos funcionales](#-módulos-funcionales)
+5. [Tecnologías utilizadas](#-tecnologías-utilizadas)
+6. [Principios de POO aplicados](#-principios-de-poo-aplicados)
+7. [Arquitectura del sistema](#-arquitectura-del-sistema)
+8. [Instalación y ejecución](#-instalación-y-ejecución)
+9. [Conclusiones](#-conclusiones)
+10. [Recomendaciones](#-recomendaciones)
+11. [Nota técnica](#-nota-técnica-nombres-de-columna-explícitos)
+12. [Referencias](#-referencias)
 
 ---
 
-## 1. Descripción del proyecto
+## 📋 Descripción del proyecto
 
-**GymControl** es una aplicación web que automatiza la administración de un gimnasio: registro de miembros, control de membresías, cobros, ventas de productos, gestión de instructores/empleados y generación de reportes. El proyecto se desarrolló como aplicación de los principios de la **Programación Orientada a Objetos (POO)** sobre una arquitectura Jakarta EE, utilizando persistencia de datos en PostgreSQL y aplicando el **patrón DAO** para separar el acceso a datos de la lógica de negocio.
+**GymControl** es una aplicación web que automatiza la administración de un gimnasio: registro de miembros, control de membresías, cobros, ventas de productos, gestión de instructores/empleados y generación de reportes.
 
-## 2. Objetivos
+El proyecto se desarrolló como aplicación de los principios de la **POO** sobre una arquitectura Jakarta EE, utilizando persistencia de datos en PostgreSQL y aplicando el **patrón DAO** para separar el acceso a datos de la lógica de negocio.
 
-### 2.1 Objetivo general
+## 🎯 Objetivos
+
+### Objetivo general
+
 Desarrollar un sistema web orientado a objetos que permita administrar los procesos operativos de un gimnasio (miembros, membresías, pagos, productos, instructores, empleados y reportes), aplicando los pilares de la POO: **abstracción, encapsulamiento, herencia y polimorfismo**.
 
-### 2.2 Objetivos específicos
+### Objetivos específicos
+
 - Modelar el dominio del negocio mediante clases, jerarquías de herencia e interfaces.
 - Implementar un módulo de autenticación para el acceso al sistema.
 - Aplicar polimorfismo en el cálculo de vigencia de los distintos tipos de membresía.
@@ -41,11 +70,11 @@ Desarrollar un sistema web orientado a objetos que permita administrar los proce
 - Diseñar una interfaz web funcional con JSF y PrimeFaces.
 - Validar las reglas de negocio críticas mediante pruebas unitarias (JUnit 5).
 
-## 3. Justificación
+## 💡 Justificación
 
 La administración manual de un gimnasio (control de pagos, vencimiento de membresías, inventario de productos) es propensa a errores y pérdida de información. GymControl centraliza estos procesos en un sistema único, y sirve además como caso de estudio práctico de los conceptos de POO vistos en la asignatura: clases abstractas, herencia, sobrescritura de métodos (`@Override`), relaciones entre objetos persistentes y separación de responsabilidades mediante patrones de diseño (DAO).
 
-## 4. Alcance / Módulos funcionales
+## 🧩 Módulos funcionales
 
 | Módulo | Descripción |
 |---|---|
@@ -59,7 +88,7 @@ La administración manual de un gimnasio (control de pagos, vencimiento de membr
 | **Empleados** | Gestión del personal administrativo (recepción, etc.) que no es instructor (CRUD) |
 | **Reportes** | Informes generales de la operación del gimnasio (ingresos, métodos de pago) |
 
-## 5. Tecnologías utilizadas
+## 🛠️ Tecnologías utilizadas
 
 | Componente | Tecnología |
 |---|---|
@@ -74,7 +103,7 @@ La administración manual de un gimnasio (control de pagos, vencimiento de membr
 | Contenerización | Docker / Docker Compose |
 | Administración de BD | Adminer |
 
-## 6. Aplicación de los principios de la POO
+## 🧬 Principios de POO aplicados
 
 El proyecto evidencia los cuatro pilares de la Programación Orientada a Objetos directamente en el modelo de dominio (`unl.edu.ec.gymcontrol.domain`):
 
@@ -98,7 +127,7 @@ El proyecto evidencia los cuatro pilares de la Programación Orientada a Objetos
 - Al invocar `membresia.calcularFechaVencimiento()` sobre una referencia de tipo `Membresia`, el sistema ejecuta la implementación específica de la subclase real en tiempo de ejecución.
 - `EmpleadoDAO` usa `TYPE(e) = Empleado` en su consulta JPQL para excluir a `Instructor` (que también ES-UN `Empleado` polimórficamente) del listado de personal administrativo.
 
-### 6.1 Diagrama de herencia (simplificado)
+### Diagrama de herencia (simplificado)
 
 ```
 Persona (abstracta)
@@ -112,7 +141,7 @@ Membresia (abstracta)
  └── MembresiaVIP
 ```
 
-## 7. Arquitectura del sistema
+## 🏗️ Arquitectura del sistema
 
 ```
 gymControl/
@@ -124,22 +153,23 @@ gymControl/
 │   └── service/    # GymService → transacciones y reglas de negocio
 ├── src/test/java/unl/edu/ec/gymcontrol/domain/   # Pruebas unitarias JUnit 5
 ├── src/main/resources/META-INF/persistence.xml   # unidad de persistencia (JPA)
-├── src/main/liberty/config/server.xml             # servidor, puerto y datasource
-├── src/main/webapp/                                # vistas .xhtml (JSF + PrimeFaces)
-├── db/init.sql                                      # script de esquema + datos de prueba
+├── src/main/liberty/config/server.xml            # servidor, puerto y datasource
+├── src/main/webapp/                               # vistas .xhtml (JSF + PrimeFaces)
+├── db/init.sql                                    # script de esquema + datos de prueba
 ├── Dockerfile
-├── docker-compose-dev-pg.yml                       # PostgreSQL para desarrollo
+├── docker-compose-dev-pg.yml                      # PostgreSQL para desarrollo
 └── pom.xml
 ```
 
 La aplicación sigue una separación de capas típica de Jakarta EE:
+
 - **Capa de presentación:** vistas `.xhtml` (JSF/PrimeFaces).
 - **Capa de control:** *managed beans* (`bean/`).
 - **Capa de negocio / transacciones:** `GymService` — decide **cuándo** se abre/cierra una transacción (`UserTransaction`) y orquesta las llamadas a los DAO.
 - **Capa de acceso a datos (patrón DAO):** cada entidad tiene su propio DAO (`ClienteDAO`, `ProductoDAO`, `InstructorDAO`, `EmpleadoDAO`, `PagoDAO`) que implementa la interfaz genérica `GenericDAO<T, ID>` y encapsula el `EntityManager` — el service **nunca** llama a `em.persist()/em.remove()/createQuery()` directamente.
 - **Capa de persistencia:** entidades JPA (`domain/`) mapeadas a PostgreSQL.
 
-### 7.1 Patrón DAO
+### Patrón DAO
 
 ```java
 public interface GenericDAO<T, ID> {
@@ -161,14 +191,15 @@ public void guardarCliente(Cliente c) {
 }                                       // ClienteDAO solo sabe persistir
 ```
 
-## 8. Manual de instalación y ejecución
+## 🚀 Instalación y ejecución
 
-### 8.1 Requisitos previos
+### Requisitos previos
+
 - JDK 21
 - Maven (o el wrapper incluido `./mvnw` / `mvnw.cmd`)
 - Docker y Docker Compose
 
-### 8.2 Levantar la base de datos
+### 1. Levantar la base de datos
 
 ```bash
 cd gymControl
@@ -183,7 +214,7 @@ Esto crea la base `gym` en PostgreSQL (usuario `gymuser`, puerto `5435`), acorde
 > docker compose -f docker-compose-dev-pg.yml up -d
 > ```
 
-### 8.3 Compilar y ejecutar la aplicación
+### 2. Compilar y ejecutar la aplicación
 
 **Windows (PowerShell)**
 ```powershell
@@ -191,13 +222,13 @@ cd gymControl
 .\mvnw.cmd clean package liberty:run
 ```
 
-**Linux 
+**Linux / macOS**
 ```bash
 cd gymControl
 ./mvnw clean package liberty:run
 ```
 
-### 8.4 Ejecutar las pruebas unitarias
+### 3. Ejecutar las pruebas unitarias
 
 ```powershell
 .\mvnw.cmd test
@@ -205,14 +236,16 @@ cd gymControl
 
 Cubre el polimorfismo de `Membresia` (cálculo de vigencia por subclase), la relación bidireccional `Cliente`–`Membresia`, y la jerarquía de herencia `Persona → Empleado → Instructor`.
 
-### 8.5 Acceder al sistema
-Abrimos el navegador en: **http://localhost:9080**
+### 4. Acceder al sistema
 
-Credenciales de acceso:
-- **Usuario:** `admin`
-- **Contraseña:** `admin123`
+Abre el navegador en: **http://localhost:9080**
 
-## 9. Conclusiones
+| Campo | Valor |
+|---|---|
+| Usuario | `admin` |
+| Contraseña | `admin123` |
+
+## ✅ Conclusiones
 
 - El desarrollo de GymControl permitió aplicar de forma práctica los cuatro pilares de la POO sobre un caso de negocio real (gestión de un gimnasio).
 - El uso de clases abstractas (`Persona`, `Membresia`) facilitó la reutilización de código y estableció un contrato claro para las subclases.
@@ -221,21 +254,29 @@ Credenciales de acceso:
 - La separación explícita en capas DAO/Service clarificó las responsabilidades: el DAO solo sabe *cómo* guardar un dato, el Service decide *cuándo* y *con qué transacción* hacerlo.
 - Las pruebas unitarias permitieron validar de forma automática el comportamiento polimórfico de las membresías, detectando errores antes de la demostración en clase.
 
-## 10. Recomendaciones
+## 📌 Recomendaciones
 
 - Ampliar la cobertura de pruebas unitarias a la capa DAO usando una base de datos en memoria (H2) o Testcontainers.
 - Agregar roles de usuario adicionales (recepcionista, instructor) más allá del administrador único actual, aprovechando ya la entidad `Empleado`.
 - Implementar notificaciones automáticas de vencimiento de membresía.
-- Declarar explícitamente `@Column(name="...")` en todos los campos de las entidades para no depender de la convención de nombres por defecto del proveedor JPA (ver sección 11).
+- Declarar explícitamente `@Column(name="...")` en todos los campos de las entidades para no depender de la convención de nombres por defecto del proveedor JPA (ver sección [Nota técnica](#-nota-técnica-nombres-de-columna-explícitos)).
 
-## 11. Nota técnica: nombres de columna explícitos
+## 🔧 Nota técnica: nombres de columna explícitos
 
-Durante el desarrollo se detectó que, al no declarar `@Column(name="...")` explícito, el proveedor JPA (EclipseLink) genera nombres de columna distintos a los usados en `db/init.sql` para atributos de varias palabras (ej. `fechaRegistro` → `fecharegistro` en vez de `fecha_registro`). Por eso, todos los atributos compuestos del modelo (`Cliente.fechaRegistro`, `Membresia.fechaInicio/fechaVencimiento`, `Pago.nombreCliente`, `Instructor.imageUrl`) declaran su columna explícitamente. De igual forma, `Persona` declara `@DiscriminatorColumn(name="dtype")` y cada subclase su `@DiscriminatorValue` (`CLIENTE`, `EMPLEADO`, `INSTRUCTOR`) para que la herencia `JOINED` funcione de forma predecible independientemente del proveedor JPA usado.
+Durante el desarrollo se detectó que, al no declarar `@Column(name="...")` explícito, el proveedor JPA (EclipseLink) genera nombres de columna distintos a los usados en `db/init.sql` para atributos de varias palabras (ej. `fechaRegistro` → `fecharegistro` en vez de `fecha_registro`).
 
-## 12. Referencias
+Por eso, todos los atributos compuestos del modelo (`Cliente.fechaRegistro`, `Membresia.fechaInicio/fechaVencimiento`, `Pago.nombreCliente`, `Instructor.imageUrl`) declaran su columna explícitamente. De igual forma, `Persona` declara `@DiscriminatorColumn(name="dtype")` y cada subclase su `@DiscriminatorValue` (`CLIENTE`, `EMPLEADO`, `INSTRUCTOR`) para que la herencia `JOINED` funcione de forma predecible independientemente del proveedor JPA usado.
+
+## 📚 Referencias
 
 - Oracle. *Jakarta EE 10 Platform Specification.*
 - PrimeFaces. *PrimeFaces 15 User Guide.*
 - Open Liberty. *Open Liberty Documentation.*
 - PostgreSQL Global Development Group. *PostgreSQL 16 Documentation.*
 - JUnit Team. *JUnit 5 User Guide.*
+
+---
+
+<p align="center">
+  Proyecto académico — Universidad Nacional de Loja © 2026
+</p>
