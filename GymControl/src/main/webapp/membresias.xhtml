@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="jakarta.faces.html"
+      xmlns:f="jakarta.faces.core"
+      xmlns:ui="jakarta.faces.facelets"
+      xmlns:p="http://primefaces.org/ui"
+      lang="es">
+<h:head>
+    <meta charset="utf-8"/>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Gym Controller | Membresías</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet"/>
+    <style>
+        body { font-family: 'Inter', sans-serif; background: #051424; color: #d4e4fa; }
+        .glass { background: rgba(30,30,30,0.6); backdrop-filter: blur(12px); border: 1px solid rgba(255,255,255,0.1); }
+        .nav-active { background: #4be277; color: #051424; font-weight: 700; }
+        .nav-item:hover { background: rgba(255,255,255,0.05); }
+
+        input, select {
+            background: rgba(255,255,255,0.05) !important;
+            border: 1px solid rgba(255,255,255,0.15) !important;
+            color: #d4e4fa !important;
+            border-radius: 0.5rem;
+            padding: 0.5rem 0.75rem;
+            width: 100%;
+        }
+        input:focus, select:focus { outline: none; border-color: #4be277 !important; }
+
+        /* ===== SelectOneMenu (PrimeFaces) ===== */
+        .ui-selectonemenu {
+            background: rgba(255,255,255,0.05) !important;
+            border: 1px solid rgba(255,255,255,0.15) !important;
+            color: #d4e4fa !important;
+            width: 100% !important;
+            border-radius: 0.5rem !important;
+        }
+        .ui-selectonemenu .ui-selectonemenu-label { color: #d4e4fa !important; background: transparent !important; }
+        .ui-selectonemenu .ui-selectonemenu-trigger { background: transparent !important; border: none !important; color: #d4e4fa !important; }
+        .ui-selectonemenu-panel { background: #1e293b !important; border: 1px solid #334155 !important; color: #d4e4fa !important; }
+        .ui-selectonemenu-panel .ui-selectonemenu-list { background: #1e293b !important; }
+        .ui-selectonemenu-panel .ui-selectonemenu-item { color: #d4e4fa !important; padding: 0.5rem 0.75rem !important; }
+        .ui-selectonemenu-panel .ui-selectonemenu-item:hover,
+        .ui-selectonemenu-panel .ui-selectonemenu-item.ui-state-highlight {
+            background: #334155 !important; color: #4be277 !important;
+        }
+
+        /* ===== DataTable - tema oscuro (esto evita el blanco) ===== */
+        .ui-datatable,
+        .ui-datatable table {
+            background: transparent !important;
+            color: #d4e4fa !important;
+            width: 100%;
+            font-size: 0.875rem;
+        }
+        .ui-datatable thead th {
+            text-align: left;
+            color: #9ca3af !important;
+            border: none !important;
+            background: transparent !important;
+            padding-bottom: 0.75rem;
+        }
+        .ui-datatable tbody td,
+        .ui-datatable tbody tr,
+        .ui-datatable .ui-datatable-data > tr,
+        .ui-datatable .ui-datatable-data > tr > td {
+            background-color: transparent !important;
+            color: #d4e4fa !important;
+            border: none !important;
+            border-bottom: 1px solid rgba(255,255,255,0.08) !important;
+            padding: 1rem 0.5rem !important;
+        }
+        .ui-datatable tbody tr:hover td,
+        .ui-datatable .ui-datatable-data > tr:hover > td {
+            background-color: rgba(255,255,255,0.05) !important;
+        }
+        .ui-datatable .ui-widget-content {
+            background: transparent !important;
+            color: #d4e4fa !important;
+        }
+
+        /* Badges */
+        .badge-activa { background: rgba(75,226,119,0.2); color: #4be277; padding: 0.25rem 0.5rem; border-radius: 0.375rem; font-size: 0.75rem; font-weight: 600; }
+        .badge-vencida { background: rgba(239,68,68,0.2); color: #f87171; padding: 0.25rem 0.5rem; border-radius: 0.375rem; font-size: 0.75rem; font-weight: 600; }
+    </style>
+</h:head>
+<h:body class="min-h-screen flex">
+    <aside class="w-64 bg-[#0d1c2d] border-r border-white/10 p-4 flex flex-col fixed h-full">
+        <div class="flex items-center gap-3 mb-8 mt-2">
+            <div class="w-10 h-10 bg-green-500 rounded-lg flex items-center justify-center text-xl">🏋️</div>
+            <div>
+                <h2 class="font-bold text-green-400 text-lg">Apex Fitness</h2>
+                <p class="text-xs text-gray-400">Gym Management</p>
+            </div>
+        </div>
+        <nav class="flex-1 space-y-1">
+            <a href="inicio.xhtml" class="nav-item flex items-center gap-3 px-4 py-3 rounded-lg text-gray-300">
+                <span class="material-symbols-outlined text-lg">dashboard</span> Dashboard
+            </a>
+            <a href="miembros.xhtml" class="nav-item flex items-center gap-3 px-4 py-3 rounded-lg text-gray-300">
+                <span class="material-symbols-outlined text-lg">group</span> Miembros
+            </a>
+            <a href="planes.xhtml" class="nav-item flex items-center gap-3 px-4 py-3 rounded-lg text-gray-300">
+                <span class="material-symbols-outlined text-lg">card_membership</span> Planes
+            </a>
+            <a href="membresias.xhtml" class="nav-item nav-active flex items-center gap-3 px-4 py-3 rounded-lg">
+                <span class="material-symbols-outlined text-lg">workspace_premium</span> Membresías
+            </a>
+            <a href="pagos.xhtml" class="nav-item flex items-center gap-3 px-4 py-3 rounded-lg text-gray-300">
+                <span class="material-symbols-outlined text-lg">payments</span> Pagos
+            </a>
+            <a href="productos.xhtml" class="nav-item flex items-center gap-3 px-4 py-3 rounded-lg text-gray-300">
+                <span class="material-symbols-outlined text-lg">storefront</span> Productos
+            </a>
+            <a href="instructores.xhtml" class="nav-item flex items-center gap-3 px-4 py-3 rounded-lg text-gray-300">
+                <span class="material-symbols-outlined text-lg">fitness_center</span> Instructores
+            </a>
+            <a href="empleados.xhtml" class="nav-item flex items-center gap-3 px-4 py-3 rounded-lg text-gray-300">
+                <span class="material-symbols-outlined text-lg">badge</span> Empleados
+            </a>
+            <a href="reportes.xhtml" class="nav-item flex items-center gap-3 px-4 py-3 rounded-lg text-gray-300">
+                <span class="material-symbols-outlined text-lg">analytics</span> Reportes
+            </a>
+        </nav>
+        <h:form>
+            <h:commandButton value="Cerrar Sesión"
+                             action="#{loginBean.logout}"
+                             styleClass="w-full mt-4 py-2 bg-white/10 rounded-lg text-sm hover:bg-white/20 cursor-pointer text-white"
+                             onclick="return confirmarEliminar(this);"/>
+        </h:form>
+    </aside>
+
+    <main class="flex-1 ml-64 p-8">
+        <h:messages globalOnly="true"
+                    styleClass="mb-4 p-3 rounded-lg bg-white/10 text-sm"
+                    errorClass="text-red-400"
+                    infoClass="text-green-400"/>
+
+        <header class="flex justify-between items-center mb-8">
+            <h1 class="text-2xl font-bold text-green-400 uppercase tracking-tight">Membresías</h1>
+        </header>
+
+        <!-- Formulario: asignar membresía -->
+        <div class="glass rounded-xl p-6 mb-6">
+            <h2 class="text-lg font-semibold mb-4">+ Asignar Membresía</h2>
+            <h:form>
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-4">
+                    <!-- Cliente -->
+                    <div>
+                        <label class="text-xs text-gray-400 block mb-1">Cliente *</label>
+                        <p:selectOneMenu value="#{vistaGymBean.clienteSeleccionado}" converter="clienteConverter">
+                            <f:selectItem itemLabel="-- Seleccione --" itemValue="#{null}" noSelectionOption="true"/>
+                            <f:selectItems value="#{vistaGymBean.miembros}" var="c"
+                                           itemLabel="#{c.nombre}" itemValue="#{c}"/>
+                        </p:selectOneMenu>
+                    </div>
+                    <!-- Plan (viene de la BD) -->
+                    <div>
+                        <label class="text-xs text-gray-400 block mb-1">Plan *</label>
+                        <p:selectOneMenu value="#{vistaGymBean.planSeleccionado}"
+                                         converter="planConverter"
+                                         style="width:100%">
+                            <f:selectItem itemLabel="-- Seleccione un plan --"
+                                          itemValue="#{null}"
+                                          noSelectionOption="true"/>
+                            <f:selectItems value="#{vistaGymBean.planesDisponibles}"
+                                           var="plan"
+                                           itemLabel="#{plan.nombre} ($#{plan.precio})"
+                                           itemValue="#{plan}"/>
+                            <p:ajax event="change" update="@form" process="@this"/>
+                        </p:selectOneMenu>
+                    </div>
+
+                    <!-- Precio (se llena solo) -->
+                    <div>
+                        <label class="text-xs text-gray-400 block mb-1">Precio</label>
+                        <h:inputText value="#{vistaGymBean.nuevaMembresiaPrecio}" readonly="true"/>
+                    </div>
+
+                    <!-- Estado -->
+                    <!-- Estado -->
+                    <div>
+                        <label class="text-xs text-gray-400 block mb-1">Estado *</label>
+                        <p:selectOneMenu value="#{vistaGymBean.estadoSeleccionado}" style="width:100%">
+                            <f:selectItem itemValue="ACTIVA" itemLabel="Activa"/>
+                            <f:selectItem itemValue="VENCIDA" itemLabel="Vencida"/>
+                        </p:selectOneMenu>
+                    </div>
+                </div>
+
+                <h:commandButton value="Asignar Membresía"
+                                 action="#{vistaGymBean.asignarMembresia}"
+                                 styleClass="bg-green-500 text-black font-semibold px-6 py-2 rounded-lg hover:brightness-110 cursor-pointer"/>
+            </h:form>
+        </div>
+
+        <!-- Tabla -->
+        <div class="glass rounded-xl p-6">
+            <h:form>
+                <p:dataTable value="#{vistaGymBean.membresias}" var="m" styleClass="ui-datatable">
+                    <p:column headerText="ID">
+                        <h:outputText value="#{m.id}"/>
+                    </p:column>
+                    <p:column headerText="Cliente">
+                        <h:outputText value="#{m.cliente.nombre}"/>
+                    </p:column>
+                    <p:column headerText="Tipo">
+                        <h:outputText value="#{m.tipo}"/>
+                    </p:column>
+                    <p:column headerText="Precio">
+                        <h:outputText value="#{m.precio}">
+                            <f:convertNumber type="currency" currencySymbol="$"/>
+                        </h:outputText>
+                    </p:column>
+                    <p:column headerText="Inicio">
+                        <h:outputText value="#{m.fechaInicio}"/>
+                    </p:column>
+                    <p:column headerText="Vencimiento">
+                        <h:outputText value="#{m.fechaVencimiento}"/>
+                    </p:column>
+                    <p:column headerText="Estado">
+                        <span class="#{m.esActiva() ? 'badge-activa' : 'badge-vencida'}">
+                            #{m.esActiva() ? 'Activa' : 'Vencida'}
+                        </span>
+                    </p:column>
+                    <p:column headerText="Acciones">
+                        <div class="flex flex-col gap-1">
+                            <h:commandButton value="Renovar"
+                                             action="#{vistaGymBean.renovarMembresia(m)}"
+                                             styleClass="bg-white text-gray-800 text-xs font-medium px-3 py-1.5 rounded-md hover:bg-gray-100 cursor-pointer border-0 shadow-sm mb-1"/>
+                            <h:commandButton value="Eliminar"
+                                             action="#{vistaGymBean.eliminarMembresia(m)}"
+                                             styleClass="bg-white text-red-500 text-xs font-medium px-3 py-1.5 rounded-md hover:bg-gray-100 cursor-pointer border-0 shadow-sm"
+                                             onclick="return confirmarEliminar(this);"/>
+                        </div>
+                    </p:column>
+                </p:dataTable>
+            </h:form>
+        </div>
+    </main>
+
+    <script>
+        function confirmarEliminar(boton) {
+            Swal.fire({
+                title: '¿Estás seguro?',
+                text: 'Esta acción no se puede deshacer',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#4be277',
+                cancelButtonColor: '#ef4444',
+                confirmButtonText: 'Sí, eliminar',
+                cancelButtonText: 'Cancelar',
+                background: '#0d1c2d',
+                color: '#d4e4fa'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    boton.onclick = null;
+                    boton.click();
+                }
+            });
+            return false;
+        }
+    </script>
+</h:body>
+</html>

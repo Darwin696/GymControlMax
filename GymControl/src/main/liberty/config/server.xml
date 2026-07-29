@@ -1,0 +1,35 @@
+<server description="gymControl">
+
+    <featureManager>
+        <feature>webProfile-10.0</feature>
+        <feature>persistence-3.1</feature>
+        <feature>enterpriseBeansLite-4.0</feature>
+    </featureManager>
+
+    <basicRegistry id="defaultBasicRegistry" realm="BasicRealm">
+        <user name="admin" password="admin123" />
+    </basicRegistry>
+
+    <keyStore id="defaultKeyStore" password="password" />
+
+    <httpEndpoint id="defaultHttpEndpoint" host="*" httpPort="9080" httpsPort="9443" />
+
+    <!-- Biblioteca PostgreSQL -->
+    <library id="postgresLib">
+        <fileset dir="${shared.resource.dir}/postgres" includes="*.jar"/>
+    </library>
+
+    <!-- DataSource -->
+    <dataSource id="gymDS" jndiName="jdbc/gymDS" type="javax.sql.ConnectionPoolDataSource">
+        <jdbcDriver libraryRef="postgresLib"/>
+        <properties.postgresql
+                serverName="localhost"
+                portNumber="5435"
+                databaseName="gym"
+                user="gymuser"
+                password="gymUser2626"/>
+    </dataSource>
+
+    <webApplication location="gymControl.war" contextRoot="/"/>
+
+</server>
